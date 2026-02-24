@@ -215,4 +215,18 @@ if user_prompt:
     bot_reply = process_input(user_prompt)
     st.session_state.messages.append({"role":"assistant","content":bot_reply})
     with st.chat_message("assistant"): st.markdown(bot_reply)
+
 st.markdown("</div>", unsafe_allow_html=True)
+
+# --- 9. DOWNLOAD BUTTON AFTER INTERVIEW COMPLETION ---
+if st.session_state.step == "done":
+    csv_path = "interview_data.csv"
+    if os.path.exists(csv_path):
+        with open(csv_path, "rb") as file:
+            st.download_button(
+                label="Download All Candidate Data (CSV)",
+                data=file,
+                file_name="candidate_responses.csv",
+                mime="text/csv",
+                help="Click to download all collected candidate responses"
+            )
